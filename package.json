@@ -5,9 +5,8 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start":"node app.js",
-    "dev":"nodemon app.js"
-
+    "start": "node app.js",
+    "dev": "nodemon app.js"
   },
   "keywords": [
     "Server"
@@ -15,6 +14,8 @@
   "author": "Umesh More",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.17.1"
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "uniqid": "^5.2.0"
   }
 }
