@@ -4,6 +4,8 @@ const {
   createTask,
   verifyPostRequest,
   emptyPostRequest,
+  getTaskById,
+  updateTask,
 } = require("../controlls/taskController");
 
 const router = express.Router();
@@ -11,6 +13,7 @@ const router = express.Router();
 router
   .route("/tasks")
   .get(getAllTasks)
-  .post(emptyPostRequest, verifyPostRequest, createTask);
+  .post(verifyPostRequest, emptyPostRequest, createTask);
 
+router.route("/tasks/:id").get(getTaskById).patch(updateTask);
 module.exports = router;

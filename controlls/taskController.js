@@ -7,20 +7,6 @@ const sendErrorMessage = require("../helper/sendError");
 const Error = require("../helper/ErrorClass");
 const sendResponseMessage = require("../helper/sendResponse");
 
-const emptyPostRequest = (req, res, next) => {
-  let obj = Object.values(req.body);
-  if (obj == "" || obj == " ") {
-    sendErrorMessage(
-      new Error(411, "UnSuccessful", "Add Some Task"),
-      req,
-      res,
-      next
-    );
-  } else {
-    next();
-  }
-};
-
 const verifyPostRequest = (req, res, next) => {
   const reqiuredProperties = ["taskName"];
 
@@ -31,6 +17,20 @@ const verifyPostRequest = (req, res, next) => {
   if (!result) {
     sendErrorMessage(
       new Error(400, "UnSuccessful", "Proper Input"),
+      req,
+      res,
+      next
+    );
+  } else {
+    next();
+  }
+};
+
+const emptyPostRequest = (req, res, next) => {
+  let todoContent = req.body["taskName"];
+  if (!todoContent.trim().length) {
+    sendErrorMessage(
+      new Error(411, "UnSuccessful", "Add Some Task"),
       req,
       res,
       next
@@ -62,7 +62,28 @@ const createTask = (req, res, next) => {
   sendResponseMessage(201, "Successful", [newTask], req, res, next);
 };
 
+const getTaskById = (req, res, next) => {
+  let task = tasks.find((task) => {
+    return task.taskID === req.params.id;
+  });
+  if (task) {
+    sendResponseMessage(200, "Successful", task, req, res, next);
+    next();
+  } else {
+    sendErrorMessage(
+      new Error(404, "UnSuccessful", "Not Found"),
+      req,
+      res,
+      next
+    );
+  }
+};
+
+const updateTask = (req, res, next) => {};
+
 module.exports.getAllTasks = getAllTasks;
 module.exports.createTask = createTask;
 module.exports.verifyPostRequest = verifyPostRequest;
 module.exports.emptyPostRequest = emptyPostRequest;
+module.exports.getTaskById = getTaskById;
+module.exports.updateTask = updateTask;
